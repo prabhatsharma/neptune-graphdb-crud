@@ -14,11 +14,11 @@ async function main() {
     g = graph.traversal().withRemote(dc);
 
     // get spouse of prabhat
-    // var spouse = await g.V().has('name', 'prabhat').both('spouse').valueMap(true).toList()
+    // var spouse = await g.V().has('person', 'name', 'prabhat').both('spouse').valueMap(true).toList()
     // console.log(spouse)
 
     // get friends of prabhat
-    var friends = await g.V().has('name', 'suraj').both('friend').valueMap(true).toList()
+    var friends = await g.V().has('person', 'name', 'prabhat').both('friend').valueMap(true).toList()
     console.log(friends)
 
     await dc.close()
