@@ -37,20 +37,9 @@ async function main() {
         await g.V(prabhat.value).addE('friend').to(shailabh.value).next()
 
         await g.V(prabhat.value).addE('spouse').to(quinsika.value).next()
-        
-        // await g.V().addE('friend').from_(suraj.value.id).to(prabhat.value.id).next()
-
-        console.log(prabhat.value.id)
-        // prabhat.addE('friend', suraj)
     } catch (error) {
         console.log(error)
     }
-
-    // await g.addV('person').property('id', '2').property('name', 'vadas').property('age', 27).next()
-    // await g.addV('software').property('id', '3').property('name', 'lop').property('lang', 'java').next()
-    // await g.addV('person').property('id', '4').property('name', 'josh').property('age', 32).next()
-    // await g.addV('person').property('id', '6').property('name', 'peter').property('age', 35).next()
-    // await g.addV('person').property('id', '7').property('name', 'prabhat').property('age', 37).property('expertise', 'cloud').property('expertise', 'k8s').next()
 
     await dc.close()
 }

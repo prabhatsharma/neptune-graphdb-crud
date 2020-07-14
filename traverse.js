@@ -13,19 +13,13 @@ async function main() {
     graph = new Graph();
     g = graph.traversal().withRemote(dc);
 
-    // get all vertices
-    var items2 = await g.V().valueMap(true).toList()
-    console.log(items2)
-
-    // get all edges
-    var edges = await g.E().valueMap(true).toList()
-    console.log(edges)
-
     // get spouse of prabhat
-    var spouse = 
+    // var spouse = await g.V().has('name', 'prabhat').both('spouse').valueMap(true).toList()
+    // console.log(spouse)
 
-
-
+    // get friends of prabhat
+    var friends = await g.V().has('name', 'suraj').both('friend').valueMap(true).toList()
+    console.log(friends)
 
     await dc.close()
 }

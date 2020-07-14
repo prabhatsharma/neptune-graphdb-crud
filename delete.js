@@ -10,17 +10,16 @@ async function main() {
     const graph = new Graph();
     const g = graph.traversal().withRemote(dc);
 
-    // await g.V('0cb99fca-e424-ed2d-1b53-26f054572db6').drop().next()
-
     var vertices = await g.V().toList()
 
+    // delete all vertices
     for(var i=0;i < vertices.length;i++){
-        // console.log(vertices[i].id)
         await g.V(vertices[i].id).drop().next()
     }
 
     var edges = await g.E().toList
 
+    // delete all edges
     for(var j=0;j<edges.length;j++){
         await g.E(edges[j].id).drop().next()
     }
