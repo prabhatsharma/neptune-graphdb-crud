@@ -1,4 +1,6 @@
 const gremlin = require('gremlin');
+const cliProgress = require('cli-progress');
+
 const DriverRemoteConnection = gremlin.driver.DriverRemoteConnection;
 const Graph = gremlin.structure.Graph;
 
@@ -12,10 +14,17 @@ async function main() {
 
     var vertices = await g.V().toList()
 
+    const bar1 = new cliProgress.SingleBar({}, cliProgress.Presets.shades_classic);
+    bar1.start(vertices.length, 0);
+
     // delete all vertices
     for(var i=0;i < vertices.length;i++){
+        // console.log('deleting: ', i)
         await g.V(vertices[i].id).drop().next()
+        bar1.update(i+1);
     }
+
+    bar1.stop();
 
     var edges = await g.E().toList
 
