@@ -10,7 +10,6 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "cli-progress": "^3.8.2",
     "flat": "^5.0.0",
     "gremlin": "^3.4.7"
   }

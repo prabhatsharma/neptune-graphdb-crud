@@ -1,0 +1,38 @@
+{
+    "kind": "Event",
+    "apiVersion": "audit.k8s.io/v1",
+    "level": "Metadata",
+    "auditID": "275de994-8c8b-471b-9162-5cba708cc363",
+    "stage": "ResponseComplete",
+    "requestURI": "/api/v1/namespaces/amazon-cloudwatch/configmaps/cwagent-clusterleader",
+    "verb": "get",
+    "user": {
+        "username": "system:serviceaccount:amazon-cloudwatch:cloudwatch-agent",
+        "uid": "5c3ca918-b27e-4d56-a049-8da05dc9eb70",
+        "groups": [
+            "system:serviceaccounts",
+            "system:serviceaccounts:amazon-cloudwatch",
+            "system:authenticated"
+        ]
+    },
+    "sourceIPs": [
+        "10.0.47.106"
+    ],
+    "userAgent": "amazon-cloudwatch-agent/v0.0.0 (linux/amd64) kubernetes/$Format",
+    "objectRef": {
+        "resource": "configmaps",
+        "namespace": "amazon-cloudwatch",
+        "name": "cwagent-clusterleader",
+        "apiVersion": "v1"
+    },
+    "responseStatus": {
+        "metadata": {},
+        "code": 200
+    },
+    "requestReceivedTimestamp": "2020-07-14T16:18:17.886206Z",
+    "stageTimestamp": "2020-07-14T16:18:17.888817Z",
+    "annotations": {
+        "authorization.k8s.io/decision": "allow",
+        "authorization.k8s.io/reason": "RBAC: allowed by ClusterRoleBinding \"cloudwatch-agent-role-binding\" of ClusterRole \"cloudwatch-agent-role\" to ServiceAccount \"cloudwatch-agent/amazon-cloudwatch\""
+    }
+}

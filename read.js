@@ -15,7 +15,7 @@ async function main() {
 
     // get all vertices
     var items2 = await g.V().valueMap(true).toList()
-    // console.log(items2)
+    console.log(items2)
 
     // get all edges
     var edges = await g.E().valueMap(true).toList()
@@ -24,7 +24,7 @@ async function main() {
     // get spouse of prabhat
     var spouse = await g.V().has('person', 'name', 'prabhat').both('spouse').valueMap(true).next()
 
-    console.log(spouse)
+    // console.log(spouse)
 
     await dc.close()
 }
