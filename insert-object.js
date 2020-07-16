@@ -4,7 +4,7 @@ const flatten = require('flat')
 const DriverRemoteConnection = gremlin.driver.DriverRemoteConnection;
 const Graph = gremlin.structure.Graph;
 
-var endpoint = "npt2.cluster-ckxzh9614kml.us-west-2.neptune.amazonaws.com"
+var endpoint = "npt3.cluster-ckxzh9614kml.us-west-2.neptune.amazonaws.com"
 
 var dc = new DriverRemoteConnection('wss:' + endpoint + ':8182/gremlin', { mimeType: 'application/vnd.gremlin-v2.0+json' });
 
@@ -28,7 +28,3 @@ async function main() {
 
 
 main()
-
-
-
-

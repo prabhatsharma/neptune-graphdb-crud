@@ -5,7 +5,7 @@ const Graph = gremlin.structure.Graph;
 
 
 async function main() {
-    var endpoint = "npt2.cluster-ckxzh9614kml.us-west-2.neptune.amazonaws.com"
+    var endpoint = "npt3.cluster-ckxzh9614kml.us-west-2.neptune.amazonaws.com"
 
     dc = new DriverRemoteConnection('wss:' + endpoint + ':8182/gremlin', {});
 
