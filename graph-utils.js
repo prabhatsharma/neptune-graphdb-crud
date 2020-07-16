@@ -12,9 +12,7 @@ var dc = new DriverRemoteConnection('wss:' + endpoint + ':8182/gremlin', { mimeT
 const graph = new Graph();
 const g = graph.traversal().withRemote(dc);
 
-async function main() {
-    var event = require('./event2.json')
-    // var flatEvent = flatten(event)
+exports.writegraph = async function(event) {
     var id = event.auditID
     delete(event.auditID)
 
@@ -29,8 +27,8 @@ async function main() {
             }
             
         } else {
-            var response = await utils.checkandInsert(key, event[key])
-            if(response.inserted == true){
+            var response = await utils.checkandInsert(key, event[key]) // check if already present in graph in dynamodb. If not insert it. Meta is tored in DDB
+            if(response.inserted == true){ // if we just inserted in DDB then go ahead and insert in graph
                 try {
                     var item = await g.addV(key).property('id', response.id).next() // 1. insert the child node
                 } catch (error) {
@@ -39,33 +37,32 @@ async function main() {
                 
                 // insert additional properties
                 var flatsubKey
-                if(key == 'userAgent') {
+                if(key == 'userAgent') { // userAgent needs separate handling as its not an object but string
                     flatsubKey = event[key]
                     try {
                         await g.V(item.value).property(key,flatsubKey).next() // 2. insert additional properties of child
                     } catch (error) {
                         console.log('could not insert additional properties of child node: ', key, " : ", flatsubKey)
                     }
-                } 
-                else {
+                } else {
                     flatsubKey = flatten(event[key])
                     for(var keySub in flatsubKey){
                         try {
-                            await g.V(item.value).property(keySub,flatsubKey[keySub]).next() // 2. insert additional properties of child
+                            if(!typeof(flatsubKey[keySub]) == 'object') {
+                                await g.V(item.value).property(keySub,flatsubKey[keySub]).next() // 2. insert additional properties of child
+                            }                            
                         } catch (error) {
                             console.log('could not insert additional properties of child node: ', keySub, " : ", flatsubKey[keySub])
                         }
                     }
                 } 
 
-                
-
                 try {
                     await g.V(log.value).addE('relatesTo').to(item.value).next() // 3. create relationship of inserted node with event
                 } catch (error) {
                     console.log('could not create relationship with: ', key)
                 }
-            } else { // child node is already present
+            } else { // child node is already present in graph and DDB
                 var item = await g.V().has(key,'id', response.id).next() // 1. get the existing node
                 try {
                     // 2. create relationship of existing node with event
@@ -76,15 +73,10 @@ async function main() {
             }
 
             delete(event[key])
-            console.log(response)
+            // console.log(response)
 
             await dc.close()
         }
     }
-    console.log(event)
+    // console.log(event)
 }
-
-
-
-main()
-
